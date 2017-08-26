@@ -4,7 +4,7 @@ class FootballAPI {
 	constructor(apiUrl) {
 		let _apiUrl = apiUrl;
 		this.createApiSearchUrl = function() {
-			return `${_apiUrl}/competitions/`;
+			return `${_apiUrl}/competitions`;
 		};
 		this.getApiUrl = function() {
 			return _apiUrl;

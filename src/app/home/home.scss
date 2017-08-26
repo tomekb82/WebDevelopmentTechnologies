@@ -1,56 +1,61 @@
-.test-subject {
-	color: blue;
-}
+$card-placeholder-color:  rgb(35,154,234);
 
-.home {
-  height: 300px;
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  padding-left: 200px;
-  margin-top: 50px;
+.home-card {
+  width: 200px;
+  height: 295px;
+  overflow: hidden;
+  position: relative;
 
-  & &__textarea {
-    height: 300px;
-    padding: 10px;
-    line-height: 20px;
-    letter-spacing: 1px;
-    font-family: 'Roboto';
-  }
-   
-  & &__indicator {
+  &:hover {
+    .home-card-title {
+      cursor: pointer;
+      background: none;
+    }
 
-    color: #c4c6c7;
-      flex:1;
-  }
-    
-  & &__button {
-    height: 50px;
-    width: 100px;
-     padding-left: 10px;
-    //margin-left: 400px;
-  }     
- 
-}
-   
-.home-header {
-  display: flex;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-
-  & &__label {
-    width: 150px;
-    font-weight: 800;
+    .home-movie-card {
+      transform: scale(1.05, 1.05);
+    }
   }
 
-  & &__counter-label {
-    width: 101px;
-    padding-left: 10px;
-    color: #c4c6c7;
+  .home-movie-card {
+    width: inherit;
+    height: inherit;
+    background-size: 200px 250px;
+        background: $card-placeholder-color;
+        position: absolute;
+
+        transition: all 1s ease;
   }
 
-  & &__counter {
-    color: #c4c6c7;
+  .home-movie-title {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background: rgba(0, 0, 0, 0.4);
+      width: inherit;
+      height: inherit;
+
+      .home-movie-tile-text {
+        position: absolute;
+        bottom: 0px;
+
+        height: 40px;
+        line-height: 40px;
+
+        width: inherit;
+        display: block;
+        background: rgba(0, 0, 0, 0.8);
+        color: lightgrey;
+
+        padding: 0px 10px;
+        box-sizing: border-box;
+
+        text-align: center;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+      }
   }
 }

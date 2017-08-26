@@ -1,1 +1,39 @@
 <div class="test-subject" ng-bind="ctrl.test"></div>
+
+
+ <form name="searchForm">
+	<md-input-container>
+		<label>Podaj rok zawodów: </label>
+		<!-- <input ng-model="searchValue" 
+		           ng-change="onSearchChange({ $text: searchValue })"
+					 ng-model-options="{ debounce: 300 }"
+					 ng-minlength="3">
+		</input> -->
+		<input ng-model="ctrl.year" ng-minlength="4">
+		<button  ng-click="ctrl.searchCompetitions()">Wyszukaj zawody</button>
+	</md-input-container>
+</form>
+
+<md-diver></md-diver>
+<ul ng-repeat="item in ctrl.itemList">
+	<li ng-click="ctrl.onItemClick(item.id)"> {{ item.caption }}(liga: {{item.league}})</li>
+</ul>
+
+<md-diver></md-diver>
+  <div flex layout="row"
+       layout-wrap layout-align="center center">
+      <md-card ng-repeat="team in ctrl.teams"
+               class="home-card"
+               md-theme-watch>
+        <div class="home-movie-card"
+        	ng-style="{'background-image': 'url('+ team.crestUrl + ')'}">
+        </div>
+        <div class="home-movie-title">
+            <span class="home-movie-tile-text"> {{ team.name }} (liga: {{team.code}})</span>
+        </div>  
+      </md-card>
+    </div>
+
+
+
+

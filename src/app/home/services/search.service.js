@@ -9,11 +9,11 @@
  	    });
  	}
 
- 	  search(year) {
+ 	search(year) {
  	  	if (!year) {
       		throw Error('year argument is required');
     	}
-    	
+
  	  	let promiseObject = {
  	  		method: 'GET',
  	  		url: this.searchCompetitions(),
@@ -23,8 +23,28 @@
  	  	};
            
  	  	return this.$http(promiseObject)
- 	  	  .then((response) => response.data);
- 	  }
+ 	  	  .then((response) => {
+ 	  	  	return response.data;
+ 	  	  })
+ 	  	  .catch(error => console.log(error));
+ 	}
+
+ 	searchTeamById(teamId) {
+ 	  	if (!teamId) {
+      		throw Error('team argument is required');
+    	}
+
+ 	  	let promiseObject = {
+ 	  		method: 'GET',
+ 	  		url: this.searchTeam(teamId)
+ 	  	};
+           
+ 	  	return this.$http(promiseObject)
+ 	  	  .then((response) => {
+ 	  	  	return response.data;
+ 	  	  })
+ 	  	  .catch(error => console.log(error));
+ 	}
  }
 
  export default angular
