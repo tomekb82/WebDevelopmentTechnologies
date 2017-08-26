@@ -10,23 +10,26 @@ module.exports = function (config) {
             '../../node_modules/angular-mocks/angular-mocks.js',
             '../../node_modules/angular-test-runner/angular-test-runner.js',
             '../../node_modules/sinon/lib/sinon.js',
-            '../../node_modules/lodash/lodash.js',
-            '../../src/app/notes/**/*.js'
-        ],
+            '../../node_modules/lodash/lodash.js', 
+            '../../src/app/**/*.spec.js',
+            '../../src/app/**/*.html' // this is necessary if we want to test htmls from "templateUrl" 
+ 
+	],
 
         autoWatch: true,
 
         frameworks: ['jasmine-jquery', 'jasmine'],
 
-        browsers: ['Firefox'],
+        browsers: ['Chrome'],
 
         plugins: [
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-babel-preprocessor',
             'karma-jasmine-jquery',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-webpack',
+            'karma-ng-html2js-preprocessor'
         ],
 
         junitReporter: {
@@ -35,13 +38,21 @@ module.exports = function (config) {
         },
 
         preprocessors: {
-            '**/*.js': ['babel'],
+            '../../src/app/**/*.js': ['webpack'],
+            '../../src/app/**/*.html': ['ng-html2js'] // this is necessary if we want to test htmls from "templateUrl"
+
         },
-        babelPreprocessor: {
-            options: {
-                presets: ['es2015'],
+        ngHtml2JsPreprocessor: { // this is necessary if we want to test htmls from "templateUrl"
+            moduleName: 'templates' // define module name containing our htmls - it must be include to test if we want to test "templateUrl"
+        },
+        webpack: {
+            module: {
+                loaders: [
+                    {test: /\.js/,  loader: 'babel-loader'},
+                ]
             },
-        }
+            watch: true
+        },
 
     });
 };

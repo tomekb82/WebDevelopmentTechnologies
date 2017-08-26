@@ -1,9 +1,11 @@
+import NotesModule from './autosaving-notes.component';
+
 fdescribe('autosaving notes', () => {
     let server, app;
     const {expectElement, type} = testRunner.actions;
 
     beforeEach(() => {
-        app = testRunner.app(['autosavingNotes']);
+        app = testRunner.app([NotesModule.name]);
         server = testRunner.http();
     });
 
@@ -78,9 +80,9 @@ fdescribe('autosaving notes', () => {
         html.verify(
             expectElement('.autosaving-notes__textarea').toHaveValue('01234567890123456789012345678901234567890123456789'),
             expectElement('.autosaving-notes-header__counter').toHaveText('0')
-        );    
+        );
     });
-    
+
     it('decrease number of chars while typing', () => {
         const html = app.runHtml('<autosaving-notes></autosaving-notes>');
 
@@ -91,7 +93,7 @@ fdescribe('autosaving notes', () => {
         html.verify(
             expectElement('.autosaving-notes__textarea').toHaveValue('Moja notatka'),
             expectElement('.autosaving-notes-header__counter').toHaveText('38')
-        );    
+        );
     });
 
 

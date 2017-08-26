@@ -1,17 +1,17 @@
-angular.module('autosavingNotes', [])
+export default angular.module('autosavingNotes', [])
     .component('autosavingNotes', {
         template: `
-                            <div class="autosaving-notes">
-                                <div class="autosaving-notes-header">
-                                    <div class="autosaving-notes-header__label">Notes</div>
-                                    <div class="autosaving-notes-header__indicator" ng-bind="ctrl.indicator"></div>
-                                    <div class="autosaving-notes-header__counter" ng-bind="ctrl.counter()"></div>
-                                    <div class="autosaving-notes-header__counter-label">characters left</div>
-                                </div>
-                                <textarea class="autosaving-notes__textarea" ng-model="ctrl.model" ng-change="ctrl.save()"></textarea>
-
-                                <textarea class="autosaving-notes__status" ng-model="ctrl.status"></textarea>
-                            </div>`,
+            <div class="autosaving-notes">
+                <div class="autosaving-notes-header">
+                    <div class="autosaving-notes-header__label">Notes</div>
+                    <div class="autosaving-notes-header__indicator" ng-bind="ctrl.indicator"></div>
+                    <div class="autosaving-notes-header__counter" ng-bind="ctrl.counter()"></div>
+                    <div class="autosaving-notes-header__counter-label">characters left</div>
+                </div>
+                <textarea class="autosaving-notes__textarea" ng-model="ctrl.model" ng-change="ctrl.save()"></textarea>
+    
+                <textarea class="autosaving-notes__status" ng-model="ctrl.status"></textarea>
+            </div>`,
         controller: AutosavingNotesController,
         controllerAs: 'ctrl'
     });

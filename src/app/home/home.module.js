@@ -1,18 +1,9 @@
-require('./home.scss');
+//require('./home.scss');
 
-import HomeCtrl from './home.controller.js';
+import HomeComponent from './home.controller';
 
 const HomeModule = angular
-  .module('webDev.home', [])
-	.controller('HomeCtrl', HomeCtrl)
-  .config(function($stateProvider) {
-  	$stateProvider
-  	  .state('home', {
-  	  	url: '/home',
-  	  	template: require('./home.html'),
-  	  	controller: HomeCtrl,
-  	  	controllerAs: 'home'
-  	  });
-  });
+    .module('webDev.home', [])
+    .component(HomeComponent.name, HomeComponent.config);
 
 export default HomeModule;
