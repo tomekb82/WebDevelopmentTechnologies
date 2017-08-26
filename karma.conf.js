@@ -2,25 +2,47 @@
 module.exports = function (config) {
     config.set({
 
-        basePath: 'src/app',
-
-        files: [
-            '../../node_modules/angular/angular.js',
-            '../../node_modules/angular-ui-router/release/angular-ui-router.js',
-            '../../node_modules/angular-mocks/angular-mocks.js',
-            '../../node_modules/angular-test-runner/angular-test-runner.js',
-            '../../node_modules/sinon/lib/sinon.js',
-            '../../node_modules/lodash/lodash.js', 
-            '../../src/app/**/*.spec.js',
-            '../../src/app/**/*.html' // this is necessary if we want to test htmls from "templateUrl" 
- 
-	],
-
-        autoWatch: true,
+        basePath: './src/app',
 
         frameworks: ['jasmine-jquery', 'jasmine'],
 
+        reporters: [
+            // Reference: https://github.com/mlex/karma-spec-reporter
+            // Set reporter to print detailed results to console
+            'progress'
+        ],
+
+        files: [
+            '../../node_modules/angular-test-runner/angular-test-runner.js',
+            // Grab all files in the app folder that contain .spec. 
+            './../tests.bundle.js',
+            './../app/**/*.html'
+        ],
+
+        preprocessors: {
+            // Reference: http://webpack.github.io/docs/testing.html
+            // Reference: https://github.com/webpack/karma-webpack
+            // Convert files with webpack and load sourcemaps
+            './../tests.bundle.js': ['webpack'],
+            './../app/**/*.html': ['ng-html2js']
+        },
+
         browsers: ['Chrome'],
+
+        //singleRun: true,
+        autoWatch: true,
+
+        webpack: require('./config/webpack.test'),
+
+        // Hide webpack build information from output
+        webpackMiddleware: {
+            noInfo: 'errors-only'
+        },
+
+        ngHtml2JsPreprocessor: {
+            //stripPrefix: 'src/',
+            moduleName: 'templates'
+        },
 
         plugins: [
             'karma-chrome-launcher',
@@ -31,33 +53,11 @@ module.exports = function (config) {
             'karma-webpack',
             'karma-ng-html2js-preprocessor'
         ],
-webpack: require('./config/webpack.test'),
-// Hide webpack build information from output
-    webpackMiddleware: {
-      noInfo: 'errors-only'
-    },
 
         junitReporter: {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
-        },
-
-        preprocessors: {
-            '../../src/app/**/*.js': ['webpack'],
-            '../../src/app/**/*.html': ['ng-html2js'] // this is necessary if we want to test htmls from "templateUrl"
-
-        },
-        ngHtml2JsPreprocessor: { // this is necessary if we want to test htmls from "templateUrl"
-            moduleName: 'templates' // define module name containing our htmls - it must be include to test if we want to test "templateUrl"
-        },
-/*        webpack: {
-            module: {
-                loaders: [
-                    {test: /\.js/,  loader: 'babel-loader'},
-                ]
-            },
-            watch: true
-        },*/
+        }
 
     });
 };

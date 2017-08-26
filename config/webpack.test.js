@@ -11,34 +11,28 @@ module.exports = {
 
   module: {
     rules: [
-
-{
-                test: /\.js$/,
-                use: [
-                        { loader:'babel-loader?presets=es2015'}
-                ],
-                exclude: /(node_modules)/
-      },
-
-{
-        test: /\.scss$/,
+      {
+        test: /\.js$/,
         use: [
-                { loader: "style-loader"},
-                { loader: "css-loader"},
-                { loader: "sass-loader"}
+          {loader:'babel-loader?presets=es2015'}
         ],
         exclude: /(node_modules)/
       },
 
-
- {
+      {
+        test: /\.scss$/,
+        use: [
+          {loader: "style-loader"},
+          {loader: "css-loader"},
+          {loader: "sass-loader"}
+        ],
+        exclude: /(node_modules)/
+      },
+      {
         test: /\.html$/,
         loader: 'raw-loader',
         exclude: [helpers.absolutePath('src/index.html')]
       },
-
-
-
     ]
   },
 

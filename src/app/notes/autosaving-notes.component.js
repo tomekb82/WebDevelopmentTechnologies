@@ -1,4 +1,4 @@
-export default angular.module('autosavingNotes', [])
+export default angular.module('webDev.autosavingNotes', [])
     .component('autosavingNotes', {
         template: `
             <div class="autosaving-notes">

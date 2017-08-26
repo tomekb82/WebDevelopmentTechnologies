@@ -6,7 +6,6 @@ fdescribe('home', () => {
 
     beforeEach(() => {
         app = testRunner.app([HomeModule.name, 'templates']);
-        console.log(app);
         server = testRunner.http();
     });
 
@@ -20,7 +19,7 @@ fdescribe('home', () => {
 
         html.verify(
             expectElement('.test-subject').toHaveText('Hello World')
-        );
+        )
 
     });
 

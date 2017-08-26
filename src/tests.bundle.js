@@ -13,9 +13,7 @@ import angular from 'angular';
 // Built by the core Angular team for mocking dependencies
 import mocks from 'angular-mocks';
 
-import router from 'angular-ui-router';
-
-import app from './../../src/app/app.js'
+import app from './app/app.js'
 
 
 let context = require.context('.', true, /\.spec\.js/);
