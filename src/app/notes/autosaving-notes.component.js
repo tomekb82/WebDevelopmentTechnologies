@@ -29,7 +29,7 @@ function AutosavingNotesController($http) {
             .then(() => self.indicator = 'Saved.')
             .catch((resp) => {
                 self.status = resp.status;
-                self.indicator = 'Not saved.'
+                self.indicator = 'Not saved.';
             }
         );
 

@@ -31,6 +31,11 @@ module.exports = function (config) {
             'karma-webpack',
             'karma-ng-html2js-preprocessor'
         ],
+webpack: require('./config/webpack.test'),
+// Hide webpack build information from output
+    webpackMiddleware: {
+      noInfo: 'errors-only'
+    },
 
         junitReporter: {
             outputFile: 'test_out/unit.xml',
@@ -45,14 +50,14 @@ module.exports = function (config) {
         ngHtml2JsPreprocessor: { // this is necessary if we want to test htmls from "templateUrl"
             moduleName: 'templates' // define module name containing our htmls - it must be include to test if we want to test "templateUrl"
         },
-        webpack: {
+/*        webpack: {
             module: {
                 loaders: [
                     {test: /\.js/,  loader: 'babel-loader'},
                 ]
             },
             watch: true
-        },
+        },*/
 
     });
 };
