@@ -1,4 +1,4 @@
-//import uiRouter from 'angular-ui-router';
+import uiRouter from 'angular-ui-router';
 
 import HomeComponent from './home/home.controller';
 
@@ -9,12 +9,16 @@ const appDependencies = [
 ];
 
 const appModules = [
+  //Views
   require('./home/home.module.js'), 
+
+  //Services
+  require('./home/services/search.service.js')
 ];
 
 angular
   .module('webDev', appDependencies.concat(appModules.map(getModuleName)))
-  
+   .constant('apiUrl', '//api.football-data.org/v1') 
    .config( /*@ngInject*/ ($stateProvider, $urlRouterProvider) => {
     $urlRouterProvider.otherwise('/home');
 
