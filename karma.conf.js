@@ -13,7 +13,7 @@ module.exports = function (config) {
         ],
 
         files: [
-            //'../../node_modules/angular-test-runner/angular-test-runner.js',
+            '../../node_modules/angular-test-runner/angular-test-runner.js',
             // Grab all files in the app folder that contain .spec. 
             './../tests.bundle.js',
             './../app/**/*.html'

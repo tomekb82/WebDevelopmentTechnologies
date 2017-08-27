@@ -1,0 +1,12 @@
+<form name="searchForm">
+	<md-input-container>
+		<label>Podaj rok zawodów: </label>
+		<!-- <input ng-model="searchValue" 
+		           ng-change="onSearchChange({ $text: searchValue })"
+					 ng-model-options="{ debounce: 300 }"
+					 ng-minlength="3">
+		</input> -->
+		<input ng-model="year" ng-minlength="4">
+		<button  ng-click="searchCompetitions({ $text: year })">Wyszukaj zawody</button>
+	</md-input-container>
+</form>

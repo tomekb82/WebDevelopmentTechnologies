@@ -1,146 +1,66 @@
-describe('home ctrl', () => {
+import HomeModule from './home.module';
 
-	let $state, $scope, $q, SearchService, homeCtrl;
+fdescribe('home', () => {
+    let server, app, $scope, $state;
+    let searchService
+    const {expectElement, type} = testRunner.actions;
 
-  	beforeEach(() => {
-		angular.mock.module('webDev');
+    beforeEach(() => {
 
-    	angular.mock.module(($provide) => {
-      		$provide.service('$state', function () {
-        		this.go = jasmine.createSpy('go');
-      		});
+        let module = HomeModule.name;
 
-      		$provide.service('SearchService', function () {
-        		this.search = jasmine.createSpy('search').and.callFake(() => {
-          			return $q.when(getFakeSearchResult());
-        		});
-        		//this.searchTeamById = jasmine.createSpy('searchTeamById').and.callFake(() => {
-          		//	return $q.when(getFakeSearchResult());
-        		//});
-      		});
-    	});
+        angular.module(module)
+            .run((_SearchService_) => {
+                searchService = _SearchService_;
+        });
 
-    	angular.mock.inject((_$controller_, _$q_, _$rootScope_, _$state_, _SearchService_) => {
-    		$scope =  _$rootScope_.$new();
-      		$state = _$state_;
-      		SearchService = _SearchService_;
-      		$q = _$q_;
+        // TODO TB: czy to jest poprawne sposob na wstrzykiwanie ?        
+        angular.module(module)
+            .run((_$rootScope_) => {
+                $scope = _$rootScope_.$new();
+        }); 
 
-      		homeCtrl = _$controller_('HomeCtrl', {
-        		$state,
-        		$scope,
-        		SearchService
-      		});
-    	});
+        // TODO TB: nie wiem jak wstrzyknąć $state    
+        /*angular.module(module)
+            .run((_$state_) => {
+                //$state = _$state_;
+        }); */ 
+
+        app = testRunner.app([module, 'templates']);
+        server = testRunner.http();
     });
 
-    function getFakeSearchResult() {
-    return [{
-      show: {
-        id: 443,
-        title: 'garfield'
-      }  
-    }];
-	}
-
-    it('should exist', () => {
-    	expect(homeCtrl).toBeDefined();
-  	});
-
-  	it('should expose year property', () => {
-    	expect(homeCtrl.year).toBeDefined();
-  	});
-
-  	it('should expose itemList array', () => {
-    	expect(angular.isArray(homeCtrl.itemList)).toBeDefined();
-  	});
-
-  	it('should expose teams array', () => {
-    	expect(angular.isArray(homeCtrl.teams)).toBeDefined();
-  	});
-
-  	it('should expose searchCompetitions method', () => {
-    	expect(angular.isFunction(homeCtrl.searchCompetitions)).toBe(true);
-  	});
-
-  	it('should expose onItemClick method', () => {
-    	expect(angular.isFunction(homeCtrl.onItemClick)).toBe(true);
-  	});
-
-	it('should navigate to showDetails on item click', () => {
-    	const fakeItem = {
-      		id: 34,
-      		name: 'LEGIA'
-    	};
-
-    	const expectedParams = {
-      		item: fakeItem,
-      		id: fakeItem.id
-    	};
-
-    	homeCtrl.onItemClick(fakeItem);
-
-    	expect($state.go).toHaveBeenCalledWith('showDetails', expectedParams);
-  	});
-
-  	it('should get shows from server on search text change', () => {
-  		homeCtrl.year = '2017';
-    	homeCtrl.searchCompetitions();
-
-    	expect(SearchService.search).toHaveBeenCalledWith('2017');
-  	});
-/* 
-TODO
-it('should display error notification when navigation item is not correct', () => {
-    homeCtrl.onItemClick();
-
-    expect(Notifications.showToastNotification)
-      .toHaveBeenCalledWith('Something goes wrong, try again later');
-
-    Notifications.showToastNotification.calls.reset();
-
-    homeCtrl.onItemClick({});
-
-    expect(Notifications.showToastNotification)
-      .toHaveBeenCalledWith('Something goes wrong, try again later');
-  });*/
-
-  it('should assign shows to itemList on search', () => {
-    homeCtrl.year = '2017';
-    homeCtrl.searchCompetitions();
-    $scope.$apply();
-
-    const expectedResults = getFakeSearchResult().map(item => item/*.show*/);
-
-    expect(homeCtrl.itemList).toEqual(expectedResults);
-  });
-
-/*
-TODO
-it('should show notification on server error', () => {
-    SearchService.search.and.callFake(() => {
-      return $q.reject();
+    afterEach(() => {
+        server.stop();
     });
 
-    homeCtrl.onSearchChange('garfield');
-    $scope.$apply();
+    it('initially we have 1000 characters', () => {
+        
+        const html = app.runHtml('<home-component></home-component>');
 
-    expect(Notifications.showToastNotification)
-      .toHaveBeenCalledWith('Server error occured, try again later');
-  });
-*/
-  it('should not modify itemList on server error', () => {
-    SearchService.search.and.callFake(() => {
-      return $q.reject();
+        html.verify(
+            expectElement('.test-subject').toHaveText('Hello World')
+        )
+
     });
 
-    const listBeforeSearch = angular.copy(homeCtrl.itemList);
+    it('service should expose showMe method', () => {
+        
+        const html = app.runHtml('<home-component></home-component>');
 
-	homeCtrl.year = '2017';
-    homeCtrl.searchCompetitions();
-    $scope.$apply();
+        expect(angular.isFunction(searchService.showMe)).toBe(true);
 
-    expect(homeCtrl.itemList).toEqual(listBeforeSearch);
-  });
+    });
+
+     it('serviceshould be extecuted once', () => {
+        
+        const html = app.runHtml('<home-component></home-component>');
+
+        searchService.showMe();
+
+        //expect(searchService.showMe.calls.count()).toBe(1); //TODO TB: nie dziala pobierania liczby wywołan operacji z uslugi
+       
+    });
+
 
 });

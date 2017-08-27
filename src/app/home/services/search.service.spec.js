@@ -1,35 +1,9 @@
 
-
-/*import SearchServiceModule from './search.service';
-
-fdescribe('search service', () => {
-    let server, app;
-
-    beforeEach(() => {
-        app = testRunner.app([SearchServiceModule.name]);
-
-        console.log(app.scope);
-        server = testRunner.http();
-    });
-
-    afterEach(() => {
-        server.stop();
-    });
-
-
-    it('should exist', () => {
-    	expect(app).toBeDefined();
-  	});
-
-
-});*/
-
-
 describe('Search service', () => {
   let SearchService;
 
   beforeEach(() => {
-    angular.mock.module('webDev');
+    angular.mock.module('webDev.home.services');
 
     angular.mock.inject((_SearchService_) => {
       SearchService = _SearchService_;

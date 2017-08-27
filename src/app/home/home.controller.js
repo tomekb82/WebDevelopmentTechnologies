@@ -1,10 +1,10 @@
 class HomeCtrl {
 
     /*@ngInject*/
-    constructor($state, $scope, SearchService) {
+    constructor(/*$state,*/ $scope, SearchService) {
        
         angular.extend(this,{ 
-            $state,
+            //$state,
             $scope,
             SearchService,
             itemList: [],
@@ -27,20 +27,24 @@ class HomeCtrl {
             .catch(() => this.indicator = 'Not saved.');
     };
 
-    searchCompetitions(){
-        this.SearchService.search(this.year)
+    searchCompetitions(year){
+        if(!year) {
+            console.log("blad");
+            //this.Notifications.showToastNotification('Something goes wrong, try again later');
+        }
+        this.SearchService.search(year)
             .then( response => {
-                this.itemList = response.map((item) => item/*.caption*/);
+                this.itemList = response.map((item) => item);
             })
             .catch(error => console.log(error));
     }
 
     onItemClick(item){
-        /*this.SearchService.searchTeamById(item.id)
-            .then( response => {
-                this.teams = response.teams;
-            })
-            .catch(error => console.log(error));*/
+        //this.SearchService.searchTeamById(item.id)
+         //   .then( response => {
+          //      this.teams = response.teams;
+          //  })
+          //  .catch(error => console.log(error));
 
 
         if(!angular.isObject(item) || !item.id) {
@@ -58,7 +62,7 @@ export default {
     config: {
         controller: HomeCtrl,
         controllerAs: 'ctrl',
-        templateUrl: 'home/home.html', // or:
-        // template: '<div class="test-subject" ng-bind="ctrl.test"></div>'
+        templateUrl: 'home/home.html'// or:
+        // template: '<div class="test-subject" ng-bind="ctrl.test"></div>'ervice
     }
 };

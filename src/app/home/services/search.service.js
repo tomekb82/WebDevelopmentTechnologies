@@ -1,13 +1,17 @@
  import FootballAPI from './../../helpers/footballAPI.js';
 
- class SearchService extends FootballAPI {
- 	constructor(apiUrl, $http) {
- 	  super(apiUrl);
+ class SearchService /*extends FootballAPI*/ {
+ 	constructor(/*apiUrl,*/ $http) {
+ 	  //super(apiUrl);
       angular
  	    .extend(this, {
  	    	$http
  	    });
  	}
+
+    showMe(){
+    	console.log("test");
+    }
 
  	search(year) {
  	  	if (!year) {
@@ -45,6 +49,7 @@
  	}
  }
 
- export default angular
-   .module('webDev.home.service', [])
+//export SearchService; 
+export default angular
+  .module('webDev.home.services', [])
    .service('SearchService', SearchService);
