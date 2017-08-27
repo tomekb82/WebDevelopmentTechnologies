@@ -5,7 +5,7 @@ import SearchTeamInput from './search-team-input/search-team-input.js';
 
 const HomeModule = angular
     .module('webDev.home', ['webDev.home.services'])
-    //.directive('searchTeamInput',() => new SearchTeamInput())
+    .directive('searchTeamInput',() => new SearchTeamInput())
     .controller('HomeCtrl', HomeComponent.config.controller)
     //.service('SearchService', SearchService)
     .component(HomeComponent.name, HomeComponent.config);
