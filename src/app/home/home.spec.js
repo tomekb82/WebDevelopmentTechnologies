@@ -9,9 +9,14 @@ fdescribe('home', () => {
 
         let module = HomeModule.name;
 
+        // wtrzyknięcie zależności jezeli będą potrzebne
         angular.module(module)
-            .run((_SearchService_) => {
+            .run((_$rootScope_, _$state_, _SearchService_) => {
+                $scope = _$rootScope_.$new();
+                $state = _$state_;
                 searchService = _SearchService_;
+
+           
         });
 
         app = testRunner.app([module, 'templates']);
