@@ -25,8 +25,7 @@
  	  	return this.$http(promiseObject)
  	  	  .then((response) => {
  	  	  	return response.data;
- 	  	  })
- 	  	  .catch(error => console.log(error));
+ 	  	  });
  	}
 
  	searchTeamById(teamId) {
@@ -42,8 +41,7 @@
  	  	return this.$http(promiseObject)
  	  	  .then((response) => {
  	  	  	return response.data;
- 	  	  })
- 	  	  .catch(error => console.log(error));
+ 	  	  });
  	}
  }
 
