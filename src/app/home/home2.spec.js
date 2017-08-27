@@ -1,4 +1,4 @@
-describe('home ctrl', () => {
+fdescribe('home ctrl', () => {
 
 	let $state, $scope, $q, SearchService, homeCtrl;
 
@@ -21,7 +21,7 @@ describe('home ctrl', () => {
     	});
 
     	angular.mock.inject((_$controller_, _$q_, _$rootScope_, _$state_, _SearchService_) => {
-    		$scope =  _$rootScope_.$new();
+    		  $scope =  _$rootScope_.$new();
       		$state = _$state_;
       		SearchService = _SearchService_;
       		$q = _$q_;
@@ -67,7 +67,7 @@ describe('home ctrl', () => {
     	expect(angular.isFunction(homeCtrl.onItemClick)).toBe(true);
   	});
 
-	it('should navigate to showDetails on item click', () => {
+	  it('should navigate to showDetails on item click', () => {
     	const fakeItem = {
       		id: 34,
       		name: 'LEGIA'
@@ -94,6 +94,7 @@ describe('home ctrl', () => {
 
     	expect(SearchService.search).toHaveBeenCalledWith('2017');
   	});
+
 /* 
 TODO
 it('should display error notification when navigation item is not correct', () => {
@@ -110,13 +111,14 @@ it('should display error notification when navigation item is not correct', () =
       .toHaveBeenCalledWith('Something goes wrong, try again later');
   });*/
 
-  it('should assign shows to itemList on search', () => {
+  it('should assign items to itemList on search', () => {
     homeCtrl.searchCompetitions('2017');
     $scope.$apply();
 
-    const expectedResults = getFakeSearchResult().map(item => item/*.show*/);
-
+    const expectedResults = getFakeSearchResult().map(item => item);
+    
     expect(homeCtrl.itemList).toEqual(expectedResults);
+  
   });
 
 /*

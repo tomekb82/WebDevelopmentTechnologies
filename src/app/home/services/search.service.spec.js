@@ -1,5 +1,5 @@
 
-describe('Search service', () => {
+fdescribe('Search service', () => {
   let SearchService;
 
   beforeEach(() => {

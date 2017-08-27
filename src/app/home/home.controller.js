@@ -1,15 +1,15 @@
 class HomeCtrl {
 
     /*@ngInject*/
-    constructor(/*$state,*/ $scope, SearchService) {
+    constructor($state, $scope, SearchService) {
        
         angular.extend(this,{ 
-            //$state,
+            $state,
             $scope,
             SearchService,
             itemList: [],
             teams:[],
-            test:'Hello World',
+            title:'Search',
             model:'',
             year:'',
             indicator:'Saved.'
@@ -29,7 +29,6 @@ class HomeCtrl {
 
     searchCompetitions(year){
         if(!year) {
-            console.log("blad");
             //this.Notifications.showToastNotification('Something goes wrong, try again later');
         }
         this.SearchService.search(year)
@@ -48,7 +47,6 @@ class HomeCtrl {
 
 
         if(!angular.isObject(item) || !item.id) {
-            console.log("blad");
             //this.Notifications.showToastNotification('Something goes wrong, try again later');
         } else {
             this.$state.go('showDetails', {item, id: item.id});

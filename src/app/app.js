@@ -7,11 +7,13 @@ import HomeComponent from './home/home.controller';
 function getModuleName(module) { return module.name || module.default.name; }
 
 const appDependencies = [
-  'ui.router',
+  uiRouter,
   'ngMaterial'
 ];
 
 const appModules = [
+  //Directive
+  require('./navbar/navbar.module.js'),
   //Views
   require('./home/home.module.js'), 
 
@@ -28,14 +30,5 @@ angular
     $mdThemingProvider.theme('default')
       .primaryPalette('blue')
       .accentPalette('orange');
-
-       $stateProvider
-         .state('home', {
-               url: '/home',
-               template: require('./home/home.html'),
-               controller: HomeComponent.config.controller,
-               controllerAs: 'ctrl'
-         });
-
 
   });

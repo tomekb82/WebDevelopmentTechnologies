@@ -14,18 +14,6 @@ fdescribe('home', () => {
                 searchService = _SearchService_;
         });
 
-        // TODO TB: czy to jest poprawne sposob na wstrzykiwanie ?        
-        angular.module(module)
-            .run((_$rootScope_) => {
-                $scope = _$rootScope_.$new();
-        }); 
-
-        // TODO TB: nie wiem jak wstrzyknąć $state    
-        /*angular.module(module)
-            .run((_$state_) => {
-                //$state = _$state_;
-        }); */ 
-
         app = testRunner.app([module, 'templates']);
         server = testRunner.http();
     });
@@ -39,7 +27,7 @@ fdescribe('home', () => {
         const html = app.runHtml('<home-component></home-component>');
 
         html.verify(
-            expectElement('.test-subject').toHaveText('Hello World')
+            expectElement('.test-subject').toHaveText('Search')
         )
 
     });
@@ -56,9 +44,10 @@ fdescribe('home', () => {
         
         const html = app.runHtml('<home-component></home-component>');
 
+        spyOn(searchService, 'showMe');  // wymaganay jezeli chcemy uzywac calls()
         searchService.showMe();
 
-        //expect(searchService.showMe.calls.count()).toBe(1); //TODO TB: nie dziala pobierania liczby wywołan operacji z uslugi
+        expect(searchService.showMe.calls.count()).toBe(1); 
        
     });
 
