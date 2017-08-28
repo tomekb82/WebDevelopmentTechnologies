@@ -1,4 +1,4 @@
-fdescribe('home ctrl', () => {
+  fdescribe('home ctrl', () => {
 
 	let $state, $scope, $q, SearchService, homeCtrl;
 

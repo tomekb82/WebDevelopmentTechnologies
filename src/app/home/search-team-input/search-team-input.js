@@ -4,7 +4,7 @@ class SearchTeamInput {
       template: require('./search-team-input.html'),
       restrict: 'E',
       scope: {
-        onSearchCompetitions: '&'
+        onSearchChange: '&'
       }
     });
   }

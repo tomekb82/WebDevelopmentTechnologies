@@ -24,8 +24,8 @@ fdescribe('search team input', () => {
     expect(searchTeamInputElement).toBeDefined();
   });
 
-  it('should expose onSearchCompetitions method', () => {
-    expect(angular.isFunction(directiveScope.onSearchCompetitions)).toBe(true);
+  it('should expose onSearchChange method', () => {
+    expect(angular.isFunction(directiveScope.onSearchChange)).toBe(true);
   });
 
   describe('actions', () => {
@@ -33,10 +33,10 @@ fdescribe('search team input', () => {
     
     beforeEach(() => {
       input = searchTeamInputElement.find('input');
-      spyOn(directiveScope, 'onSearchCompetitions');
+      spyOn(directiveScope, 'onSearchChange');
     });
 
-    it('should fire onSearchCompetitions for text longer than four chars', () => {
+    it('should fire onSearchChange for text longer than four chars', () => {
       const expectedResult = {
         $text: '2017'
       };
@@ -45,33 +45,33 @@ fdescribe('search team input', () => {
 
       $timeout.flush();
 
-      expect(directiveScope.onSearchCompetitions).toHaveBeenCalledWith(expectedResult);
+      expect(directiveScope.onSearchChange).toHaveBeenCalledWith(expectedResult);
     });
 
-    it('should not fire onSearchCompetitions when search text is shorter than 4 chars', () => {
+    it('should not fire onSearchChange when search text is shorter than 4 chars', () => {
       input.val('201').triggerHandler('input');
 
       $timeout.flush();
-      expect(directiveScope.onSearchCompetitions).not.toHaveBeenCalled();
+      expect(directiveScope.onSearchChange).not.toHaveBeenCalled();
     });
 
-    it('should not fire onSearchCompetitions until pass 300ms', () => {
+    it('should not fire onSearchChange until pass 300ms', () => {
       input.val('2017').triggerHandler('input');
 
       $timeout.flush(100);
 
-      expect(directiveScope.onSearchCompetitions).not.toHaveBeenCalled();
+      expect(directiveScope.onSearchChange).not.toHaveBeenCalled();
     });
 
-    it('should fire onSearchCompetitions after 350ms delay', () => {
+    it('should fire onSearchChange after 350ms delay', () => {
       input.val('2017').triggerHandler('input');
 
       $timeout.flush(350);
 
-      expect(directiveScope.onSearchCompetitions).toHaveBeenCalled();
+      expect(directiveScope.onSearchChange).toHaveBeenCalled();
     });
 
-    it('should fire onSearchCompetitions only for distinct value', () => {
+    it('should fire onSearchChange only for distinct value', () => {
       const expectedResult = {
         $text: '2017'
       };
@@ -84,8 +84,8 @@ fdescribe('search team input', () => {
 
       $timeout.flush(400);
 
-      expect(directiveScope.onSearchCompetitions).toHaveBeenCalledWith(expectedResult);
-      expect(directiveScope.onSearchCompetitions.calls.count()).toBe(2);
+      expect(directiveScope.onSearchChange).toHaveBeenCalledWith(expectedResult);
+      expect(directiveScope.onSearchChange.calls.count()).toBe(2);
     });
 
   });

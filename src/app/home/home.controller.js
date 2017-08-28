@@ -7,6 +7,8 @@ class HomeCtrl {
             $state,
             $scope,
             SearchService,
+
+            
             itemList: [],
             teams:[],
             title:'Search',
@@ -28,6 +30,7 @@ class HomeCtrl {
     };
 
     searchCompetitions(year){
+        console.log(year);
         if(!year) {
             //this.Notifications.showToastNotification('Something goes wrong, try again later');
         }
@@ -38,6 +41,9 @@ class HomeCtrl {
             .catch(error => console.log(error));
     }
 
+onPoleChanhe(pole){
+    console.log(pole);
+}
     onItemClick(item){
         //this.SearchService.searchTeamById(item.id)
          //   .then( response => {

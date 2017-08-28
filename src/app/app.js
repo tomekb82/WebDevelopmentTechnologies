@@ -7,7 +7,7 @@ import HomeComponent from './home/home.controller';
 function getModuleName(module) { return module.name || module.default.name; }
 
 const appDependencies = [
-  uiRouter,
+  'ui.router',
   'ngMaterial'
 ];
 
@@ -25,7 +25,7 @@ angular
   .module('webDev', appDependencies.concat(appModules.map(getModuleName)))
   .constant('apiUrl', '//api.football-data.org/v1') 
   .config( /*@ngInject*/ ($stateProvider, $urlRouterProvider, $mdThemingProvider) => {
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/home');  
 
     $mdThemingProvider.theme('default')
       .primaryPalette('blue')

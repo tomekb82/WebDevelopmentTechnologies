@@ -1,6 +1,10 @@
-<div class="test-subject" ng-bind="ctrl.title"></div>
+<div ng-bind="ctrl.title" class="test-subject" ></div>
 
-<search-team-input onSearchCompetitions="ctrl.searchCompetitions($text)"></search-team-input>
+<search-team-input on-search-change="ctrl.searchCompetitions($text)">
+</search-team-input> 
+
+<input ng-model="ctrl.pole"
+      ng-change="ctrl.onPoleChanhe({ $text: ctrl.pole })"> 
 
 <md-diver></md-diver>
 

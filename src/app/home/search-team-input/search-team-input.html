@@ -2,8 +2,8 @@
 	<md-input-container>
 		<label>Podaj rok zawodów: </label>
 		<input ng-model="year"
-			ng-change="onSearchCompetitions({ $text: year })"
-			ng-model-options="{ debounce: 300 }"
-			ng-minlength="4"> 
+			ng-change="onSearchChange({ $text: year })"
+					 ng-model-options="{ debounce: 300 }"
+					 ng-minlength="4"> 
 	</md-input-container>
 </form>

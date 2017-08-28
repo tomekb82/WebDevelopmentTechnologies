@@ -1,8 +1,8 @@
  import FootballAPI from './../../helpers/footballAPI.js';
 
- class SearchService /*extends FootballAPI*/ {
- 	constructor(/*apiUrl,*/ $http) {
- 	  //super(apiUrl);
+ class SearchService extends FootballAPI {
+ 	constructor(apiUrl, $http) {
+ 	  super(apiUrl);
       angular
  	    .extend(this, {
  	    	$http
@@ -28,6 +28,7 @@
            
  	  	return this.$http(promiseObject)
  	  	  .then((response) => {
+          console.log(response.data);
  	  	  	return response.data;
  	  	  });
  	}
