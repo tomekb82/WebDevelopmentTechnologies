@@ -14,11 +14,16 @@ const appDependencies = [
 const appModules = [
   //Directive
   require('./navbar/navbar.module.js'),
+  
   //Views
   require('./home/home.module.js'), 
+  //require('./show-details/show-details.module.js'),
 
   //Services
-  require('./home/services/search.service.js')
+  require('./home/services/search.service.js'),
+  require('./services/notifications.service.js'),
+
+  require('./constants/constants.js')
 ];
 
 angular

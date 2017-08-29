@@ -1,17 +1,17 @@
- import FootballAPI from './../../helpers/footballAPI.js';
 
- class SearchService extends FootballAPI {
- 	constructor(apiUrl, $http) {
- 	  super(apiUrl);
-      angular
+ class SearchService {
+  
+ 	constructor(footlballApiUrl, $http) {
+    angular
  	    .extend(this, {
- 	    	$http
- 	    });
+ 	      $http,
+        footlballApiUrl
+ 	  });
  	}
 
-    showMe(){
-    	console.log("test");
-    }
+  showMe(){
+    console.log("test");
+  }
 
  	search(year) {
  	  	if (!year) {
@@ -20,7 +20,7 @@
 
  	  	let promiseObject = {
  	  		method: 'GET',
- 	  		url: this.searchCompetitions(),
+ 	  		url: this.footlballApiUrl,
  	  		params: {
  	  			season: year
  	  		}
@@ -40,7 +40,7 @@
 
  	  	let promiseObject = {
  	  		method: 'GET',
- 	  		url: this.searchTeam(teamId)
+ 	  		url: `${this.footlballApiUrl}/${teamId}/teams`  
  	  	};
            
  	  	return this.$http(promiseObject)
@@ -50,7 +50,6 @@
  	}
  }
 
-//export SearchService; 
 export default angular
-  .module('webDev.home.services', [])
+  .module('webDev.home.services', ['webDev.constants'])
    .service('SearchService', SearchService);

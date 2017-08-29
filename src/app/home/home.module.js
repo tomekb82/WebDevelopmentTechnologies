@@ -14,9 +14,9 @@ const HomeModule = angular
       $stateProvider
   	   .state('home', {
   	  	  url: '/home',
-  	  		template: require('./home.html'),
+  	  		template: HomeComponent.config.template,
   	  		controller: HomeComponent.config.controller,
-  	  		controllerAs: 'ctrl'
+  	  		controllerAs: HomeComponent.config.controllerAs
   	  });
     });
 

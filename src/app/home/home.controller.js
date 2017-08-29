@@ -1,13 +1,13 @@
 class HomeCtrl {
 
     /*@ngInject*/
-    constructor($state, $scope, SearchService) {
+    constructor($state, $scope, SearchService, Notifications) {
        
         angular.extend(this,{ 
             $state,
             $scope,
             SearchService,
-
+            Notifications,
             
             itemList: [],
             teams:[],
@@ -30,20 +30,18 @@ class HomeCtrl {
     };
 
     searchCompetitions(year){
-        console.log(year);
         if(!year) {
-            //this.Notifications.showToastNotification('Something goes wrong, try again later');
+            this.Notifications.showToastNotification('Something goes wrong, try again later');
         }
         this.SearchService.search(year)
             .then( response => {
                 this.itemList = response.map((item) => item);
             })
-            .catch(error => console.log(error));
+            .catch(() => {
+                this.Notifications.showToastNotification('Server error occured, try again later');
+            });
     }
 
-onPoleChanhe(pole){
-    console.log(pole);
-}
     onItemClick(item){
         //this.SearchService.searchTeamById(item.id)
          //   .then( response => {
@@ -51,9 +49,8 @@ onPoleChanhe(pole){
           //  })
           //  .catch(error => console.log(error));
 
-
         if(!angular.isObject(item) || !item.id) {
-            //this.Notifications.showToastNotification('Something goes wrong, try again later');
+            this.Notifications.showToastNotification('Something goes wrong, try again later');
         } else {
             this.$state.go('showDetails', {item, id: item.id});
         }    
@@ -66,7 +63,7 @@ export default {
     config: {
         controller: HomeCtrl,
         controllerAs: 'ctrl',
-        templateUrl: 'home/home.html'// or:
-        // template: '<div class="test-subject" ng-bind="ctrl.test"></div>'ervice
+        template: require('./home.html')
+        //template: '<div class="test-subject" ng-bind="ctrl.title"></div>'
     }
 };

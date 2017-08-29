@@ -1,6 +1,6 @@
 
 fdescribe('Search service', () => {
-  let SearchService;
+  let SearchService, apiUrl;
 
   beforeEach(() => {
     angular.mock.module('webDev.home.services');
@@ -10,8 +10,6 @@ fdescribe('Search service', () => {
     });
   });
 
-  // TODO TB: dostaje blad 'Error: [$injector:unpr] Unknown provider: apiUrlProvider <- apiUrl <- SearchService'
-  // i nie wiem po co mam wstrzykiwac cos co jest tylko parametrem konstruktora a nie providerem;)
   it('should exist', () => {
     expect(SearchService).toBeDefined();
   });

@@ -1,6 +1,6 @@
-  fdescribe('home ctrl', () => {
+fdescribe('home ctrl', () => {
 
-	let $state, $scope, $q, SearchService, homeCtrl;
+	let $state, $scope, $q, SearchService, homeCtrl, Notifications;
 
   	beforeEach(() => {
 		angular.mock.module('webDev');
@@ -18,12 +18,17 @@
           		//	return $q.when(getFakeSearchResult());
         		//});
       		});
+
+          $provide.service('Notifications', function () {
+            this.showToastNotification = jasmine.createSpy('showToastNotification');
+          });
     	});
 
-    	angular.mock.inject((_$controller_, _$q_, _$rootScope_, _$state_, _SearchService_) => {
+    	angular.mock.inject((_$controller_, _$q_, _$rootScope_, _$state_, _SearchService_, _Notifications_) => {
     		  $scope =  _$rootScope_.$new();
       		$state = _$state_;
       		SearchService = _SearchService_;
+          Notifications = _Notifications_;
       		$q = _$q_;
 
       		homeCtrl = _$controller_('HomeCtrl', {
@@ -35,13 +40,13 @@
     });
 
     function getFakeSearchResult() {
-    return [{
-      show: {
-        id: 443,
-        title: 'garfield'
-      }  
-    }];
-	}
+      return [{
+        show: {
+          id: 443,
+          title: 'garfield'
+        }  
+      }];
+    }
 
     it('should exist', () => {
     	expect(homeCtrl).toBeDefined();
@@ -95,46 +100,53 @@
     	expect(SearchService.search).toHaveBeenCalledWith('2017');
   	});
 
-/* 
-TODO
-it('should display error notification when navigation item is not correct', () => {
-    homeCtrl.onItemClick();
 
-    expect(Notifications.showToastNotification)
-      .toHaveBeenCalledWith('Something goes wrong, try again later');
+    it('should display error notification when search year is not correct', () => {
+      
+      homeCtrl.searchCompetitions();
 
-    Notifications.showToastNotification.calls.reset();
+      expect(Notifications.showToastNotification)
+        .toHaveBeenCalledWith('Something goes wrong, try again later');
 
-    homeCtrl.onItemClick({});
+    });
+        
+    it('should display error notification when navigation item is not correct', () => {
+      
+      homeCtrl.onItemClick();
 
-    expect(Notifications.showToastNotification)
-      .toHaveBeenCalledWith('Something goes wrong, try again later');
-  });*/
+      expect(Notifications.showToastNotification)
+        .toHaveBeenCalledWith('Something goes wrong, try again later');
 
-  it('should assign items to itemList on search', () => {
-    homeCtrl.searchCompetitions('2017');
-    $scope.$apply();
+      Notifications.showToastNotification.calls.reset();
 
-    const expectedResults = getFakeSearchResult().map(item => item);
-    
-    expect(homeCtrl.itemList).toEqual(expectedResults);
-  
-  });
+      homeCtrl.onItemClick({});
 
-/*
-TODO
-it('should show notification on server error', () => {
-    SearchService.search.and.callFake(() => {
-      return $q.reject();
+      expect(Notifications.showToastNotification)
+        .toHaveBeenCalledWith('Something goes wrong, try again later');
     });
 
-    homeCtrl.onSearchChange('garfield');
-    $scope.$apply();
+    it('should assign items to itemList on search', () => {
+      homeCtrl.searchCompetitions('2017');
+      $scope.$apply();
 
-    expect(Notifications.showToastNotification)
-      .toHaveBeenCalledWith('Server error occured, try again later');
-  });
-*/
+      const expectedResults = getFakeSearchResult().map(item => item);
+    
+      expect(homeCtrl.itemList).toEqual(expectedResults);
+  
+    });
+
+    it('should show notification on server error', () => {
+      SearchService.search.and.callFake(() => {
+        return $q.reject();
+      });
+
+      homeCtrl.searchCompetitions('2017');
+      $scope.$apply();
+
+      expect(Notifications.showToastNotification)
+        .toHaveBeenCalledWith('Server error occured, try again later');
+    });
+
   it('should not modify itemList on server error', () => {
     SearchService.search.and.callFake(() => {
       return $q.reject();
