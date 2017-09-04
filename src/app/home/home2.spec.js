@@ -34,7 +34,8 @@ fdescribe('home ctrl', () => {
       		homeCtrl = _$controller_('HomeCtrl', {
         		$state,
         		$scope,
-        		SearchService
+        		SearchService,
+            Notifications
       		});
     	});
     });

@@ -1,7 +1,7 @@
 import HomeModule from './home.module';
 
 fdescribe('home', () => {
-    let server, app, $scope, $state;
+    let server, app, $scope, $state, Notifications;
     let searchService
     const {expectElement, type} = testRunner.actions;
 
@@ -11,10 +11,11 @@ fdescribe('home', () => {
 
         // wtrzyknięcie zależności jezeli będą potrzebne
         angular.module(module)
-            .run((_$rootScope_, _$state_, _SearchService_) => {
+            .run((_$rootScope_, _$state_, _SearchService_,_Notifications_) => {
                 $scope = _$rootScope_.$new();
                 $state = _$state_;
                 searchService = _SearchService_;
+                Notifications = _Notifications_;
         });
 
         app = testRunner.app([module, 'templates']);

@@ -64,6 +64,6 @@ export default {
         controller: HomeCtrl,
         controllerAs: 'ctrl',
         template: require('./home.html')
-        //template: '<div class="test-subject" ng-bind="ctrl.title"></div>'
+        //template: '<div ng-bind="ctrl.title" class="test-subject" ></div>'
     }
 };
