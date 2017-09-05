@@ -28,22 +28,35 @@ fdescribe('search team input', () => {
     expect(searchTeamInputElement).toBeDefined();
   });
   
-  it('TODO', () => {
+  it('value in input text should should be set', () => {
     const html = app.runHtml('<search-team-input></search-team-input>');
   
     html.perform(
       type('2017').in('.year')
     );
+  
+    // TODO TB: jak przetestowac opcje ng-model-option -> debounce (patrz widok) ?
 
-    $timeout.flush(350);
-    //spyOn(directiveScope, 'onSearchChange');
+    // TODO TB: jak sprawdzic ze zostala wywolana metoda onSearchChange() ?
 
-    //$timeout.flush();
+
+    html.verify(
+      expectElement('.year').toHaveValue('2017')
+    );
+
+  });
+
+  it('value in input text should have minimum 4 letters', () => {
+    const html = app.runHtml('<search-team-input></search-team-input>');
+  
+    html.perform(
+      type('201').in('.year')
+    );
     
     html.verify(
-      expectElement('.year').toHaveText('2017')
-      //expect(directiveScope.onSearchChange).toHaveBeenCalledWith(expectedResult)
-      //expectElement('.autosaving-notes__textarea').toHaveValue('01234567890123456789012345678901234567890123456789')
+      // TODO TB: jak dodac walidacje ze ajs dodal klasy bledy itp.?
+      //expectElement('.year').toHaveClass('ng-dirty') 
+      expectElement('.year').toHaveValue('201')
     );
 
   });
