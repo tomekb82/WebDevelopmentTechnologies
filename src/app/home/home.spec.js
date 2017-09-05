@@ -26,8 +26,7 @@ fdescribe('home', () => {
         server.stop();
     });
 
-    // TODO TB: prosty test ale nie wiem dlaczego (po refaktoringu) przestal mi dzialac
-    it('initially we have 1000 characters', () => {
+    it('text in home component should have default value:"Search" ', () => {
         
         const html = app.runHtml('<home-component></home-component>');
 

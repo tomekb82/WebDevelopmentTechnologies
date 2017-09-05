@@ -1,9 +1,13 @@
 
 fdescribe('search team input', () => {
 
-  let $scope, searchTeamInputElement, directiveScope, $timeout;
+  let $scope, searchTeamInputElement, directiveScope, $timeout, app;
+  const {expectElement, type} = testRunner.actions;
 
   beforeEach(() => {
+
+    app = testRunner.app(['webDev', 'templates']);
+
     angular.mock.module('webDev');
     angular.mock.module('templates');
 
@@ -22,6 +26,26 @@ fdescribe('search team input', () => {
 
   it('should exist', () => {
     expect(searchTeamInputElement).toBeDefined();
+  });
+  
+  it('TODO', () => {
+    const html = app.runHtml('<search-team-input></search-team-input>');
+  
+    html.perform(
+      type('2017').in('.year')
+    );
+
+    $timeout.flush(350);
+    //spyOn(directiveScope, 'onSearchChange');
+
+    //$timeout.flush();
+    
+    html.verify(
+      expectElement('.year').toHaveText('2017')
+      //expect(directiveScope.onSearchChange).toHaveBeenCalledWith(expectedResult)
+      //expectElement('.autosaving-notes__textarea').toHaveValue('01234567890123456789012345678901234567890123456789')
+    );
+
   });
 
   it('should expose onSearchChange method', () => {
