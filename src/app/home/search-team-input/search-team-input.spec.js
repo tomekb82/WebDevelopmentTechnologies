@@ -2,7 +2,7 @@
 fdescribe('search team input', () => {
 
   let $scope, searchTeamInputElement, directiveScope, $timeout, app;
-  const {expectElement, type} = testRunner.actions;
+  const {expectElement, type, wait} = testRunner.actions;
 
   beforeEach(() => {
 
@@ -34,16 +34,37 @@ fdescribe('search team input', () => {
     html.perform(
       type('2017').in('.year')
     );
-  
-    // TODO TB: jak przetestowac opcje ng-model-option -> debounce (patrz widok) ?
-
-    // TODO TB: jak sprawdzic ze zostala wywolana metoda onSearchChange() ?
-
 
     html.verify(
       expectElement('.year').toHaveValue('2017')
     );
 
+  });
+
+  it('on-search-change shold not be called before debounce=300ms', (done) => { 
+    
+    const stubFunc = jasmine.createSpy('spy'); 
+    const html = app.runHtml('<search-team-input on-search-change="searchCompetitions($text)"></search-team-input>', {searchCompetitions: stubFunc});
+
+    html.perform( type('2017').in('.year') );
+    html.verify( 
+      wait(299), 
+      () => expect(stubFunc).not.toHaveBeenCalledWith('2017'), 
+      done 
+    );
+  });
+
+  it('on-search-change shold be called after debounce=300ms', (done) => { 
+    
+    const stubFunc = jasmine.createSpy('spy'); 
+    const html = app.runHtml('<search-team-input on-search-change="searchCompetitions($text)"></search-team-input>', {searchCompetitions: stubFunc});
+
+    html.perform( type('2017').in('.year') );
+    html.verify( 
+      wait(301), 
+      () => expect(stubFunc).toHaveBeenCalledWith('2017'), 
+      done 
+    );
   });
 
   it('value in input text should have minimum 4 letters', () => {
@@ -60,6 +81,7 @@ fdescribe('search team input', () => {
     );
 
   });
+
 
   it('should expose onSearchChange method', () => {
     expect(angular.isFunction(directiveScope.onSearchChange)).toBe(true);
