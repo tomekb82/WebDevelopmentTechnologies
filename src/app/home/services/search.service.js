@@ -50,6 +50,5 @@
  	}
  }
 
-export default angular
-  .module('webDev.home.services', ['webDev.constants'])
+export default angular.module('webDev.home.services', ['webDev.constants'])
    .service('SearchService', SearchService);
