@@ -59,7 +59,10 @@ fdescribe('search team input', () => {
     const stubFunc = jasmine.createSpy('spy'); 
     const html = app.runHtml('<search-team-input on-search-change="searchCompetitions($text)"></search-team-input>', {searchCompetitions: stubFunc});
 
-    html.perform( type('2017').in('.year') );
+    html.perform( 
+      type('2017').in('.year') 
+    );
+
     html.verify( 
       wait(301), 
       () => expect(stubFunc).toHaveBeenCalledWith('2017'), 
@@ -67,17 +70,20 @@ fdescribe('search team input', () => {
     );
   });
 
-  it('value in input text should have minimum 4 letters', () => {
-    const html = app.runHtml('<search-team-input></search-team-input>');
-  
+  it('value in input text should have minimum 4 letters', (done) => {
+    
+    const stubFunc = jasmine.createSpy('spy'); 
+    const html = app.runHtml('<search-team-input on-search-change="searchCompetitions($text)"></search-team-input>', {searchCompetitions: stubFunc});
+
     html.perform(
       type('201').in('.year')
     );
     
     html.verify(
-      // TODO TB: jak dodac walidacje ze ajs dodal klasy bledy itp.?
-      //expectElement('.year').toHaveClass('ng-dirty') 
-      expectElement('.year').toHaveValue('201')
+      wait(301), 
+      expectElement('.year').toHaveClass('ng-dirty'),
+      () => expect(stubFunc).not.toHaveBeenCalledWith('201'), 
+      done
     );
 
   });
