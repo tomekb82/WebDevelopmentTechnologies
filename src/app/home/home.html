@@ -6,17 +6,14 @@
 <md-diver></md-diver>
 
 <ul ng-repeat="item in ctrl.itemList">
-  <li ng-click="ctrl.onItemClick(item)"> {{ item.caption }}(liga: {{item.league}})</li>
+  <li ng-click="ctrl.onItemClick(item)" class="items"> {{ item.caption }}(liga: {{item.league}})</li>
 </ul>
 
 <md-diver></md-diver>
-<div flex layout="row"
-  layout-wrap layout-align="center center">
-  <md-card ng-repeat="team in ctrl.teams"
-    class="home-card"
-    md-theme-watch>
-    <div class="home-movie-card"
-      ng-style="{'background-image': 'url('+ team.crestUrl + ')'}">
+
+<div flex layout="row" layout-wrap layout-align="center center">
+  <md-card ng-repeat="team in ctrl.teams" class="home-card" md-theme-watch>
+    <div class="home-movie-card" ng-style="{'background-image': 'url('+ team.crestUrl + ')'}">
     </div>
     <div class="home-movie-title">
       <span class="home-movie-tile-text"> {{ team.name }} (liga: {{team.code}})</span>
