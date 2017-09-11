@@ -1,7 +1,7 @@
 import HomeModule from './home.module';
 
 fdescribe('home', () => {
-    let server, app, $scope, $state, Notifications, homeCtrl;
+    let server, app, $scope, $q, $state, Notifications, homeCtrl;
     let searchService
     const {expectElement, type, click} = testRunner.actions;
 
@@ -11,11 +11,12 @@ fdescribe('home', () => {
 
         // wtrzyknięcie zależności jezeli będą potrzebne
         angular.module(module)
-            .run((_$rootScope_, _$state_, _SearchService_,_Notifications_, _$controller_) => {
+            .run((_$rootScope_, _$state_, _SearchService_,_Notifications_, _$controller_, _$q_) => {
                 $scope = _$rootScope_.$new();
                 $state = _$state_;
                 searchService = _SearchService_;
                 Notifications = _Notifications_;
+                $q = _$q_;
 
                 homeCtrl = _$controller_('HomeCtrl', {
                     $state,
@@ -27,6 +28,9 @@ fdescribe('home', () => {
 
         app = testRunner.app([module, 'templates']);
         server = testRunner.http();
+
+
+
     });
 
     afterEach(() => {
@@ -63,14 +67,11 @@ fdescribe('home', () => {
     });
 
     function getFakeSearchResult() {
-      return [
-      {
-        league: 443,
-        caption: 'garfield'
-      },
-      {
-        league: 444,
-        caption: 'garfield'
+      return [{
+        show: {
+          id: 443,
+          title: 'garfield'
+        }  
       }];
     }
 
@@ -80,29 +81,65 @@ fdescribe('home', () => {
         
         const html = app.runHtml('<home-component></home-component>');
         
-        spyOn(Notifications, 'showToastNotification');
+        spyOn(searchService, 'search').and.callFake(() => {
+            return $q.when(getFakeSearchResult());
+        });
 
-        homeCtrl.itemList = getFakeSearchResult();
+        homeCtrl.searchCompetitions('2017');
 
-        html.perform(
-            click.in('li:first.items')
-        );
+        expect(searchService.search).toHaveBeenCalledWith('2017');
+        expect(searchService.search.calls.count()).toBe(1); 
 
-        expect(Notifications.showToastNotification)
-            .toHaveBeenCalledWith('Something goes wrong, try again later');   
+        let expectedResults = getFakeSearchResult();
+    
+        console.log("test expected: " + expectedResults[0].show.title);
+        console.log('--------------');
+
+        //TODO TB: dlaczego pusta tablica skoro w kontrolerze jest ok?
+        console.log(homeCtrl.getItems());
+        expect(homeCtrl.itemList[0].show.title).toHaveText(expectedResults[0].show.title);
+ 
     });
 
-    // TODO TB: jak sprawdzic ze zostaly w html utworzone 2 elementy li
+ 
+    // TODO TB: jak sprawdzic ze zostaly w html utworzone 2 elementy li - czy to jest ok ?
     it('err2', () => {
         
         const html = app.runHtml('<home-component></home-component>');
         
-        homeCtrl.itemList = getFakeSearchResult();
+        spyOn(searchService, 'search').and.callFake(() => {
+            return $q.when(getFakeSearchResult());
+        });
+        spyOn(Notifications, 'showToastNotification');
 
-        html.verify(
-            expectElement('ul li.items').toHaveText('garfield')
-        )
+        homeCtrl.searchCompetitions('2017');
 
+        html.perform(
+            click.in('li')
+        );
+
+        expect(Notifications.showToastNotification)
+            .toHaveBeenCalledWith('Something goes wrong, try again later');  
+    });
+
+    it('err3', () => {
+        
+        const html = app.runHtml('<home-component></home-component>');
+    
+        // TODO TB: jak utworzyc spy z przekazaniem obiektu do onItemClick(item) w liscie
+        spyOn(homeCtrl, 'onItemClick');
+        //homeCtrl.onItemClick({});
+        spyOn($state, 'go');
+        //$state()
+
+        homeCtrl.searchCompetitions('2017');
+
+        html.perform(
+            click.in('li')
+        );
+
+        expect($state.go)
+            .toHaveBeenCalled();  
     });
 
 

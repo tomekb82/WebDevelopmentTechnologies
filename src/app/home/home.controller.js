@@ -9,7 +9,7 @@ class HomeCtrl {
             SearchService,
             Notifications,
             
-            itemList: [],
+            itemList: [{test:'testowa wartosc'}],
             teams:[],
             title:'Search',
             model:'',
@@ -35,11 +35,16 @@ class HomeCtrl {
         }
         this.SearchService.search(year)
             .then( response => {
-                this.itemList = response.map((item) => item);
+                this.itemList =  response.map((item) => item);
+                console.log("kontroler: " + this.itemList[0].show.title);
             })
             .catch(() => {
                 this.Notifications.showToastNotification('Server error occured, try again later');
             });
+    }
+
+    getItems(){
+        return this.itemList;
     }
 
     onItemClick(item){
