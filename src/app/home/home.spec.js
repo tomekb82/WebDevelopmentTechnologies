@@ -75,44 +75,31 @@ fdescribe('home', () => {
       }];
     }
 
-    // TODO TB: nie wiem jak podpiac sie pod zdarzenie ng-click na liscie elementow li
-    // Error: Could not find li:first.items element for click action
     it('err1', () => {
-        
+            
         const html = app.runHtml('<home-component></home-component>');
         
         spyOn(searchService, 'search').and.callFake(() => {
             return $q.when(getFakeSearchResult());
         });
 
+        let expectedResults = getFakeSearchResult();
+
         homeCtrl.searchCompetitions('2017');
+        $scope.$apply();
 
         expect(searchService.search).toHaveBeenCalledWith('2017');
         expect(searchService.search.calls.count()).toBe(1); 
-
-        let expectedResults = getFakeSearchResult();
-    
-        console.log("test expected: " + expectedResults[0].show.title);
-        console.log('--------------');
-
-        //TODO TB: dlaczego pusta tablica skoro w kontrolerze jest ok?
-        console.log(homeCtrl.getItems());
-        expect(homeCtrl.itemList[0].show.title).toHaveText(expectedResults[0].show.title);
- 
+        expect(homeCtrl.itemList).toEqual(expectedResults);
     });
 
  
-    // TODO TB: jak sprawdzic ze zostaly w html utworzone 2 elementy li - czy to jest ok ?
+    // TODO TB: czy to jest ok ?
     it('err2', () => {
         
         const html = app.runHtml('<home-component></home-component>');
         
-        spyOn(searchService, 'search').and.callFake(() => {
-            return $q.when(getFakeSearchResult());
-        });
         spyOn(Notifications, 'showToastNotification');
-
-        homeCtrl.searchCompetitions('2017');
 
         html.perform(
             click.in('li')

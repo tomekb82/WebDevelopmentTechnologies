@@ -36,7 +36,6 @@ class HomeCtrl {
         this.SearchService.search(year)
             .then( response => {
                 this.itemList =  response.map((item) => item);
-                console.log("kontroler: " + this.itemList[0].show.title);
             })
             .catch(() => {
                 this.Notifications.showToastNotification('Server error occured, try again later');
