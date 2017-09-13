@@ -28,9 +28,6 @@ fdescribe('home', () => {
 
         app = testRunner.app([module, 'templates']);
         server = testRunner.http();
-
-
-
     });
 
     afterEach(() => {
@@ -68,10 +65,8 @@ fdescribe('home', () => {
 
     function getFakeSearchResult() {
       return [{
-        show: {
-          id: 443,
-          title: 'garfield'
-        }  
+          caption: 'polska liga',
+          league: 'PL'
       }];
     }
 
@@ -86,7 +81,8 @@ fdescribe('home', () => {
         let expectedResults = getFakeSearchResult();
 
         homeCtrl.searchCompetitions('2017');
-        $scope.$apply();
+        // TODO TB: czy da sie bez apply(), aby nie trzeba bylo pamietac ?
+        $scope.$apply(); 
 
         expect(searchService.search).toHaveBeenCalledWith('2017');
         expect(searchService.search.calls.count()).toBe(1); 
@@ -94,7 +90,7 @@ fdescribe('home', () => {
     });
 
  
-    // TODO TB: czy to jest ok ?
+    // TODO TB: czy ten test wyglada ok ?
     it('err2', () => {
         
         const html = app.runHtml('<home-component></home-component>');
@@ -113,24 +109,33 @@ fdescribe('home', () => {
         
         const html = app.runHtml('<home-component></home-component>');
     
-        // TODO TB: jak utworzyc spy z przekazaniem obiektu do onItemClick(item) w liscie
-        spyOn(homeCtrl, 'onItemClick');
-        //homeCtrl.onItemClick({});
-        spyOn($state, 'go');
-        //$state()
+        spyOn(searchService, 'search').and.callFake(() => {
+            return $q.when(getFakeSearchResult());
+        });
+
+        let expectedResults = getFakeSearchResult();
 
         homeCtrl.searchCompetitions('2017');
+        $scope.$apply();
 
+        expect(homeCtrl.itemList).toEqual(expectedResults);
+
+        console.log(homeCtrl.itemList);
+    
+        html.verify(
+            // TODO TB: jak sprawdzic ze obiekty zostaly dodane do htmla
+            expectElement('.items').toHaveText('PL') 
+        );
+
+        // TODO TB: jak sprawdzic ze na stronie zostalo utworzonych 
+        // n-elementow li (tyle ile obiektow w liscie) ?
+
+        // TODO TB: jak przetestowac ze po kliknieciu zostala zawolana metoda homeCtrl.onImteClick() a nastepnie $state.go()
         html.perform(
             click.in('li')
         );
+        expect($state.go).toHaveBeenCalled(); 
 
-        expect($state.go)
-            .toHaveBeenCalled();  
     });
-
-
-
-
 
 });

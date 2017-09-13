@@ -47,6 +47,7 @@ class HomeCtrl {
     }
 
     onItemClick(item){
+        console.log(item);
         //this.SearchService.searchTeamById(item.id)
          //   .then( response => {
           //      this.teams = response.teams;
