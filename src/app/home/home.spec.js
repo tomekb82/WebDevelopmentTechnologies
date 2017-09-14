@@ -82,7 +82,7 @@ fdescribe('home', () => {
 
         homeCtrl.searchCompetitions('2017');
         // TODO TB: czy da sie bez apply(), aby nie trzeba bylo pamietac ?
-        $scope.$apply(); 
+        //$scope.$apply(); 
 
         expect(searchService.search).toHaveBeenCalledWith('2017');
         expect(searchService.search.calls.count()).toBe(1); 

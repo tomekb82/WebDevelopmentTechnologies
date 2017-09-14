@@ -31,22 +31,6 @@
  	  	  	return response.data;
  	  	  });
  	}
-
- 	searchTeamById(teamId) {
- 	  	if (!teamId) {
-      		throw Error('team argument is required');
-    	}
-
- 	  	let promiseObject = {
- 	  		method: 'GET',
- 	  		url: `${this.footlballApiUrl}/${teamId}/teams`  
- 	  	};
-           
- 	  	return this.$http(promiseObject)
- 	  	  .then((response) => {
- 	  	  	return response.data;
- 	  	  });
- 	}
  }
 
 export default angular.module('webDev.home.services', ['webDev.constants'])

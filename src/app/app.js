@@ -15,14 +15,15 @@ const appModules = [
   //Directives
   require('./navbar/navbar.module.js'),
   require('./greeting/greeting.module.js'),
-  
+
   //Views
   require('./home/home.module.js'), 
-  //require('./show-details/show-details.module.js'),
+  require('./show-details/show-details.module.js'),
 
   //Services
   require('./home/services/search.service.js'),
   require('./services/notifications.service.js'),
+  require('./show-details/services/show-details.service.js'),
 
   require('./constants/constants.js')
 ];

@@ -1,4 +1,5 @@
 
+
 fdescribe('Search service', () => {
   let SearchService, apiUrl;
 
@@ -24,14 +25,5 @@ fdescribe('Search service', () => {
     expect(methodWithoutParams).toThrowError('year argument is required');
   });
 
-  it('should expose searchTeamById method', () => {
-    expect(angular.isFunction(SearchService.searchTeamById)).toBe(true);
-  });
-
-  it('should throw exception if team arg is empty', () => {
-    const methodWithoutParams = SearchService.searchTeamById.bind(SearchService);
-
-    expect(methodWithoutParams).toThrowError('team argument is required');
-  });
 });
 

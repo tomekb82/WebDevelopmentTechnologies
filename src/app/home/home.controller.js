@@ -35,7 +35,7 @@ class HomeCtrl {
         }
         this.SearchService.search(year)
             .then( response => {
-                this.itemList =  response.map((item) => item);
+                this.itemList = response.map((item) => item);
             })
             .catch(() => {
                 this.Notifications.showToastNotification('Server error occured, try again later');
@@ -47,13 +47,6 @@ class HomeCtrl {
     }
 
     onItemClick(item){
-        console.log(item);
-        //this.SearchService.searchTeamById(item.id)
-         //   .then( response => {
-          //      this.teams = response.teams;
-          //  })
-          //  .catch(error => console.log(error));
-
         if(!angular.isObject(item) || !item.id) {
             this.Notifications.showToastNotification('Something goes wrong, try again later');
         } else {

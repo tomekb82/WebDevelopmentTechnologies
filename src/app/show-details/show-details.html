@@ -1,34 +1,18 @@
 <md-content>
-
   <div style="text-align: center">
-  <h1>{{ showDetails.team.name }}</h1>
-<!--   <section>
-  <img ng-src="{{ showDetails.show.image.medium }}">
-</section>
+    <h1>Teams</h1>
+  </div>
 
-<section>
-  <h2>Rating:</h2>
-  <p>{{ showDetails.show.rating.average || '-' }}</p>
-</section>
-<section>
-  <h2>Country:</h2>
-  <p>{{ showDetails.show.country.name || '-' }}</p>
-</section>
-<section>
-  <h2>Premiered:</h2>
-  <p>{{ showDetails.show.premiered }}</p>
-</section>
-<section>
-  <h2>Category:</h2>
-  <p>{{ showDetails.show.genres.join(', ') || '-' }}</p>
-</section>
-<section>
-  <h2>Runtime:</h2>
-  <p>{{ showDetails.show.runtime }} min</p>
-</section>
-<section>
-  <h2>Summary:</h2>
-  <div style="position:absolute; width: 50%; left: 25%;">{{ showDetails.show.summary }}</div>
-</section>
-</div> -->
+  <md-diver></md-diver>
+
+  <div flex layout="row" layout-wrap layout-align="center center">
+    <md-card ng-repeat="team in showDetails.teams" class="home-card" md-theme-watch>
+      <div class="home-movie-card" ng-style="{'background-image': 'url('+ team.crestUrl + ')'}">
+      </div>
+      <div class="home-movie-title">
+        <span class="home-movie-tile-text"> {{ team.name }} (liga: {{team.code}})</span>
+      </div>  
+    </md-card>
+  </div> 
+
 </md-content>

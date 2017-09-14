@@ -3,7 +3,8 @@ fdescribe('home ctrl', () => {
 	let $state, $scope, $q, SearchService, homeCtrl, Notifications;
 
   	beforeEach(() => {
-		angular.mock.module('webDev');
+		
+      angular.mock.module('webDev');
 
     	angular.mock.module(($provide) => {
       		$provide.service('$state', function () {
