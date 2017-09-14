@@ -9,7 +9,7 @@ class HomeCtrl {
             SearchService,
             Notifications,
             
-            itemList: [{test:'testowa wartosc'}],
+            itemList: [],
             teams:[],
             title:'Search',
             model:'',

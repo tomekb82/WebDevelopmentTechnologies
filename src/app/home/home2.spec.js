@@ -15,9 +15,6 @@ fdescribe('home ctrl', () => {
         		this.search = jasmine.createSpy('search').and.callFake(() => {
           			return $q.when(getFakeSearchResult());
         		});
-        		//this.searchTeamById = jasmine.createSpy('searchTeamById').and.callFake(() => {
-          		//	return $q.when(getFakeSearchResult());
-        		//});
       		});
 
           $provide.service('Notifications', function () {

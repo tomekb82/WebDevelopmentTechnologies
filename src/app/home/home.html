@@ -5,9 +5,11 @@
 
 <md-diver></md-diver>
 
-<ul ng-repeat="item in ctrl.itemList">
-  <li ng-click="ctrl.onItemClick(item)" class="items"> {{ item.caption }}(liga: {{item.league}})</li>
-</ul>
+<div ng-if="ctrl.itemList">
+	<ul ng-repeat="item in ctrl.itemList">
+  		<li ng-click="ctrl.onItemClick(item)" class="items"> {{ item.caption }}(liga: {{item.league}})</li>
+	</ul>
+</div>
 
 
 
