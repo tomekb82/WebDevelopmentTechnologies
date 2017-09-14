@@ -1,27 +1,32 @@
 class GreetingCtrl {
 	/*@ngInject*/
-	constructor($http, $scope, $timeout) {
+	constructor($http, $scope, $timeout, Notifications) {
 		angular.extend(this, {
 			$http, 
 			$scope, 
-			$timeout
+			$timeout,
+      Notifications
 		});
 
 		this.$scope.$on('externalGreeting', (event, greeting) => {
     		this.$scope.message = greeting;
-   		});
+   	});
 
-   		this.$scope.$on('greeting', (event, greetName) => {
+   	this.$scope.$on('greeting', (event, greetName) => {
     		this.$scope.name2 = greetName;
-   		});
+   	});
 	}
 
 	sayHello() {
-    	this.$http.post('/greeting', {name: this.$scope.name})
+    	this.$http.post('http://localhost:4300/greeting', {name: this.$scope.name})
         	.then((response) => {
             	var json = response.data;
-                this.$scope.message = json.greeting;
-    		});
+              this.$scope.message = json.greeting;
+    		  })
+          .catch((error) => {
+            this.Notifications.showToastNotification("Status: " + error.status);
+          });
+          ;
     };
      
     sayGoodbye() {

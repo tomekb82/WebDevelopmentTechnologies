@@ -14,7 +14,8 @@ class HomeCtrl {
             title:'Search',
             model:'',
             year:'',
-            indicator:'Saved.'
+            indicator:'Saved.',
+            name: 'Tomek'
         });
     }
 
