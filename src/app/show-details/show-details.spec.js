@@ -71,7 +71,6 @@ fdescribe('Search-details service', () => {
 
     expect(ShowDetailsService.getTeamsInLeague).toHaveBeenCalledWith(stateparams.id); 
     expect(ShowDetailsService.getTeamsInLeague.calls.count()).toBe(1); 
-    // TODO TB: dlaczego tablica teams nie zawiera fakeowych danych skoro w kontrolerze sa ustawiane 
     expect(showDetailsCtrl.teams).toEqual(expectedResults.teams);
     
   });
