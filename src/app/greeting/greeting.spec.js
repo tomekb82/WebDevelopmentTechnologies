@@ -1,6 +1,10 @@
+import greetingModule from './greeting.module';
+
 fdescribe('greeting directive', () => {
 
+  let $scope, $http, Notifications, $timeout, greetingCtrl;
 	let server, app;
+
   	const type = testRunner.actions.type;
   	const click = testRunner.actions.click;
   	const expectElement = testRunner.actions.expectElement;
@@ -13,6 +17,24 @@ fdescribe('greeting directive', () => {
 
 
 	beforeEach(function () {
+      let module = greetingModule.name;
+
+      // wtrzyknięcie zależności jezeli będą potrzebne
+      angular.module(module)
+      .run((_$rootScope_, _$http_,_Notifications_, _$controller_, _$timeout_) => {
+        $scope = _$rootScope_.$new();
+        $http = _$http_;
+        Notifications = _Notifications_;
+        $timeout = _$timeout_;
+
+        greetingCtrl = _$controller_('GreetingCtrl', {
+          $http,
+          $scope,
+          $timeout,
+          Notifications
+        });
+      });
+
     	app = testRunner.app(['webDev.greeting']);
     	server = testRunner.http();
   	});
@@ -22,7 +44,7 @@ fdescribe('greeting directive', () => {
   	});
 
   	beforeEach(function () {
-    	server.post('/greeting', function (req) {
+    	server.post('http://localhost:4300/greeting', function (req) {
 
       		var body = req.body();
 
@@ -31,6 +53,24 @@ fdescribe('greeting directive', () => {
       		});
     	});
   	});
+
+
+    it('todo named it', () => {
+        server = testRunner.http({respondImmediately: true});
+        var html = app.runHtml('<greeting name="defaultName"/>', {defaultName: 'Tomek'});
+        server.post('http://localhost:4300/greeting', req => req.sendStatus(500));
+
+        spyOn(Notifications, 'showToastNotification');
+
+        html.perform(
+            click.in('button#hello'),
+            server.respond
+        );
+        expect(Notifications.showToastNotification)
+            .toHaveBeenCalledWith("Status: 500"); 
+   
+    });
+
 
   	it('populates name with default value', function () {
 
