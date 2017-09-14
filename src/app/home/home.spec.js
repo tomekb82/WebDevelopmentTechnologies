@@ -89,14 +89,24 @@ fdescribe('home', () => {
         expect(homeCtrl.itemList).toEqual(expectedResults);
     });
 
- 
-    // TODO TB: czy ten test wyglada ok ?
     it('err2', () => {
         
         const html = app.runHtml('<home-component></home-component>');
         
         spyOn(Notifications, 'showToastNotification');
 
+        spyOn(searchService, 'search').and.callFake(() => {
+            return $q.when(getFakeSearchResult());
+        });
+
+        let expectedResults = getFakeSearchResult();
+
+        homeCtrl.searchCompetitions('2017');
+        $scope.$apply(); // TODO TB: czy potrzebne ? 
+
+        expect(homeCtrl.itemList).toEqual(expectedResults);
+
+        // TODO TB: nie znajduje elementow li ?
         html.perform(
             click.in('li')
         );
@@ -116,7 +126,7 @@ fdescribe('home', () => {
         let expectedResults = getFakeSearchResult();
 
         homeCtrl.searchCompetitions('2017');
-        $scope.$apply();
+        $scope.$apply(); // TODO TB: czy potrzebne ? 
 
         expect(homeCtrl.itemList).toEqual(expectedResults);
 
